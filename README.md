@@ -1,0 +1,1 @@
+# bga-ts-types
