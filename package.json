@@ -1,0 +1,26 @@
+{
+  "name": "bga-studio-mg",
+  "version": "0.1.3",
+  "description": "Types for class in BoardGameArena Studio",
+  "main": "index.d.ts",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartinGoulet/bga-ts-types.git"
+  },
+  "keywords": [],
+  "author": "Martin Goulet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MartinGoulet/bga-ts-types/issues"
+  },
+  "homepage": "https://github.com/MartinGoulet/bga-ts-types#readme",
+  "devDependencies": {
+    "bga-ts-types": "^0.1.0",
+    "typescript": "^4.2.4"
+  }
+}
