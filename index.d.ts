@@ -405,7 +405,37 @@ declare namespace ebg {
              * @example
              * this.slideToObjectPos( "some_token", "some_place_on_board", 0, 10 ).play();
              */
-            slideToObject: (mobile_obj: string, target_obj: string, target_x: number, target_y: number, duration?: number = 500, delay?: number) => DojoFxAnimation;
+            slideToObjectPos: (mobile_obj: string, target_obj: string, target_x: number, target_y: number, duration?: number = 500, delay?: number) => DojoFxAnimation;
+            /**
+             * This method is useful when you want to slide a temporary HTML object from one place to another. 
+             * As this object does not exists before the animation and won't remain after, it could be complex to 
+             * create this object (with dojo.place), to place it at its origin (with placeOnObject) to slide it (with slideToObject) 
+             * and to make it disappear at the end.
+             * @param mobile_obj_html Piece of HTML code that represent the object to slide
+             * @param mobile_obj_parent ID of an HTML element of your interface that will be the parent of this temporary HTML object. 
+             * @param from ID of the origin of the slide.
+             * @param to ID of the target of the slide.
+             * @param duration Duration in millisecond of the slide. The default is 500 milliseconds.
+             * @param delay If you defines a delay, the slide will start only after this delay
+             * 
+             * @example
+             * this.slideTemporaryObject( '<div class="token_icon"></div>', 'tokens', 'my_origin_div', 'my_target_div' ).play();
+             */
+            slideTemporaryObject: (mobile_obj_html: string, mobile_obj_parent: string, from: string, to: string, duration?: number = 500, delay?: number) => DojoFxAnimation;
+
+            /**
+             * This method is a handy shortcut to slide an existing HTML object to some place then destroy it upon arrival. It can be used for example to move a victory token or a card from the board to the player panel to show that the player earns it, then destroy it when we don't need to keep it visible on the player panel.
+             * @param node 
+             * @param to 
+             * @param duration Duration in millisecond of the slide. The default is 500 milliseconds.
+             * @param delay If you defines a delay, the slide will start only after this delay
+             * 
+             * @note 
+             * It works the same as this.slideToObject and takes the same arguments, but it starts the animation.
+             * @example
+             * this.slideToObjectAndDestroy( "some_token", "some_place_on_board", 1000, 0 );
+             */
+            slideToObjectAndDestroy: (node: string, to: string, duration?: number, delay?: number) => DojoFxAnimation;
 
             ///////////////////////////////
             // Moving Elements
@@ -448,12 +478,30 @@ declare namespace ebg {
             checkPossibleActions: (action: string, nomessage: string) => boolean;
             ajaxcall: (url: string, parameters: any, obj_callback: any, callback: Function, callback_error: Function) => void;
 
-            setClientState: (state_name: string, args: { descriptionmyturn: string; args: any }) => void;
+            setClientState: (state_name: string, args: any) => void;
 
             scoreCtrl: { [player_id: string]: ebg.counter };
+
+            notifqueue: INotificationQueue;
+
+            inherited: (arguments: any) => any;
         }
 
     }
+}
+
+declare interface INotificationQueue {
+    setSynchronous: (event: string, duration: number) => void;
+}
+
+declare interface INotification<TArgs> {
+    args: TArgs;
+    log: string;
+    move_id: number;
+    table_id: string;
+    time: number;
+    type: string;
+    uid: string;
 }
 
 declare const g_gamethemeurl: string;
@@ -519,6 +567,7 @@ declare interface BgaGamestate {
 }
 
 declare const _: (text: string) => string;
+declare const __: (lang: string, text: string) => string;
 declare const $: (query: string) => HTMLCollection<Element>;
 
 enum DojoPlaceAction {
