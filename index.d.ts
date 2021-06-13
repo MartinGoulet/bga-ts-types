@@ -28,7 +28,7 @@ declare namespace ebg {
          * @param item_width width in pixels for the stock component.
          * @param item_height height in pixels for the stock component.
          */
-        create: (page: ebg.core.gamegui, container_div: string, item_width: number, item_height: number) => void;
+        create(page: ebg.core.gamegui, container_div: string, item_width: number, item_height: number) : void;
         /**
          * @param type: id of the type to add. You can choose any positive integer. All item types must have distinct IDs.
          * @param weight: weight of items of this type. Weight value is used to sort items of the stock during the display. Note that you can specify the same weight for all items; in this case, they are not sorted and their order might change randomly at any time.
@@ -348,7 +348,9 @@ declare namespace ebg {
             format_block: (template: string, params: any) => string;
             removeTooltip: (nodeId: string) => void;
             addTooltipHtml: (nodeId: string, html: string, delay?: number) => void;
+            addTooltipToClass: (cssClass: any, helpString: string, actionString: string, delay?: number) => void;
             addActionButton: (id: string, label: string, method: string | Function, destination?: string, blinking?: boolean, color?: BgaButtonColor) => void;
+            connect: (element: HTMLElement, event: string, handler: string | Function) => any;
             connectClass: (cssClassName: string, event: string, handle: string | Function) => void;
             disconnect: (element: HTMLElement, event: string) => void;
             disconnectAll: () => void;
@@ -504,7 +506,22 @@ declare interface BgaGameGUI {
     format_block: (template: string, params: any) => string;
 
     removeTooltip: (nodeId: string) => void;
+    /**
+     * Add an HTML tooltip to the DOM node (for more elaborate content such as presenting a bigger version of a card).
+     */
     addTooltipHtml: (nodeId: string, html: string, delay?: number) => void;
+    /**
+     * Add a simple text tooltip to all the DOM nodes set with this cssClass.
+     * @param cssClass 
+     * @param helpString Specify to display some information about "what is this game element?"
+     * @param actionString Specify to display some information about "what happens when I click on this element?".
+     * @param delay 
+     * @note
+     * All concerned nodes must have IDs to get tooltips.
+     * @note
+     * helpString and actionString : Usually, _() must be used for the text to be marked for translation.
+     */
+    addTooltipToClass: ( cssClass, helpString: string, actionString: string, delay?: number ) => void;
     addActionButton: (id: string, label: string, method: string | Function, destination?: string, blinking?: boolean, color?: BgaButtonColor) => void;
 
     connectClass: (cssClassName: string, event: string, handle: string | Function) => void;
@@ -548,7 +565,7 @@ type BgaButtonColor = "red" | "gray";
 type BgaStockSelectionMode = 0 | 1 | 2;
 type BgaStockSelectionAppearance = "border" | "disappear" | "class";
 
-declare interface BgaGame<TBgaPlayer extends BgaPlayer, TBgaGamedatas extends BgaGamedatas<TBgaPlayer>> {
+declare class BgaGame<TBgaPlayer extends BgaPlayer, TBgaGamedatas extends BgaGamedatas<TBgaPlayer>> {
     /**
      * This method is called when the page is refreshed, and sets up the game interface.
      */
