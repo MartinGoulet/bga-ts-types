@@ -73,7 +73,10 @@ declare interface BgaGamePreferenceValue {
 }
 
 declare interface BgaGamestate {
+    id: string;
     name: string;
+    description: string;
+    descriptionmyturn: string;
 }
 
 declare const _: (text: string) => string;
@@ -122,6 +125,7 @@ interface Dojo {
     removeClass: (nodeId: string, className?: string) => void;
     toggleClass: (nodeId: string, className: string, forceValue: boolean) => void;
     hasClass: (nodeId: string, className: string) => boolean;
+    animateProperty: (info: any) => any;
 
     attr: (nodeId: string, property: string, value?: any) => any;
 
@@ -158,7 +162,7 @@ interface Dojo {
      * @example
      * dojo.connect( $('my_element'), 'onclick', this, 'onClickOnMyElement' );
      */
-    connect: (element: any, event: string, callback_obj: any, callback_method: string | Function) => number;
+    connect: (element: any, event: string, callback_obj: any, callback_method?: string | Function) => number;
 
 
     query: Function;

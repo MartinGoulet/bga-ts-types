@@ -29,7 +29,7 @@ declare namespace ebg {
             /**
              * Return the ID of the active player, or null if we are not in an "activeplayer" type state.
              */
-            getActivePlayerId: () => boolean;
+            getActivePlayerId: () => number;
             /**
              * Return an array with the IDs of players who are currently active (or an empty array if there are none).
              */
@@ -168,8 +168,10 @@ declare namespace ebg {
             disconnectAll: () => void;
 
             restoreServerGameState: () => void;
+            updatePageTitle() : void;
 
-            checkPossibleActions: (action: string, nomessage: string) => boolean;
+            checkPossibleActions: (action: string, nomessage?: string) => boolean;
+            checkAction: (action: string, nomessage?: boolean) => boolean;
             ajaxcall: (url: string, parameters: any, obj_callback: any, callback: Function, callback_error: Function) => void;
 
             setClientState: (state_name: string, args: any) => void;
@@ -179,6 +181,8 @@ declare namespace ebg {
             notifqueue: INotificationQueue;
 
             inherited: (args: any) => any;
+
+            confirmationDialog( message: string, yesHandler?: string | Function, noHandler?: string | Function ) : void;
         }
 
         /**

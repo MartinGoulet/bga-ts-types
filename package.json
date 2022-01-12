@@ -1,6 +1,6 @@
 {
   "name": "bga-studio-mg",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "Types for class in BoardGameArena Studio",
   "main": "index.d.ts",
   "types": "index.d.ts",
