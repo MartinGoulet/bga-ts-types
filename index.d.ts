@@ -1,5 +1,4 @@
 declare namespace ebg {
-
     /**
      * Card from the BGA Framework (used with Deck)
      */
@@ -10,20 +9,19 @@ declare namespace ebg {
         type: string;
         type_arg: string;
     }
-
 }
 
+declare interface Card extends ebg.card {}
 
-
-
-declare interface Card extends ebg.card { }
-
-type BgaButtonColor = "red" | "gray";
+type BgaButtonColor = "blue" | "red" | "gray";
 
 type BgaStockSelectionMode = 0 | 1 | 2;
 type BgaStockSelectionAppearance = "border" | "disappear" | "class";
 
-declare class BgaGame<TBgaPlayer extends BgaPlayer, TBgaGamedatas extends BgaGamedatas<TBgaPlayer>> {
+declare class BgaGame<
+    TBgaPlayer extends BgaPlayer,
+    TBgaGamedatas extends BgaGamedatas<TBgaPlayer>
+> {
     /**
      * This method is called when the page is refreshed, and sets up the game interface.
      */
@@ -44,7 +42,7 @@ declare abstract class BgaGamedatas<TPlayer extends BgaPlayer> {
     gamestate: BgaGamestate;
     gamestates: { [gamestateId: number]: BgaGamestate };
     neutralized_player_id: string;
-    notifications: { last_packet_id: string, move_nbr: string }
+    notifications: { last_packet_id: string; move_nbr: string };
     playerorder: (string | number)[];
     players: { [playerId: string]: TPlayer };
     tablespeed: string;
@@ -62,10 +60,9 @@ declare interface BgaPlayer {
     zombie: number;
 }
 
-
 declare interface BgaGamePreference {
     value: number;
-    values: { [value_id: number]: BgaGamePreferenceValue }
+    values: { [value_id: number]: BgaGamePreferenceValue };
 }
 
 declare interface BgaGamePreferenceValue {
@@ -88,27 +85,27 @@ type DojoPlaceAction =
     /**
      * Replace the container element with your new html
      */
-    "replace" |
+    | "replace"
     /**
      * Places the node as a child of the reference node. The node is placed as the first child.
      */
-    "first" |
+    | "first"
     /**
      * (Default) Places the node as a child of the reference node. The node is placed as the last child.
      */
-    "last" |
+    | "last"
     /**
      * Places the node right before the reference node.
      */
-    "before" |
+    | "before"
     /**
      * Places the node right after the reference node.
      */
-    "after" |
+    | "after"
     /**
      * Replaces all children of the reference node with the node.
      */
-    "only";
+    | "only";
 
 /**
  * Dojo interface (BGA is not using the latest Dojo toolkit)
@@ -123,7 +120,11 @@ interface Dojo {
 
     addClass: (nodeId: string, className: string) => void;
     removeClass: (nodeId: string, className?: string) => void;
-    toggleClass: (nodeId: string, className: string, forceValue: boolean) => void;
+    toggleClass: (
+        nodeId: string,
+        className: string,
+        forceValue: boolean
+    ) => void;
     hasClass: (nodeId: string, className: string) => boolean;
     animateProperty: (info: any) => any;
 
@@ -140,7 +141,7 @@ interface Dojo {
      * Remove the element
      * @example
      * // this remove all subnode of class green from mynode
-     * dojo.query(".green", mynode).forEach(dojo.destroy); 
+     * dojo.query(".green", mynode).forEach(dojo.destroy);
      */
     destroy: (element: any) => void;
     /**
@@ -154,16 +155,23 @@ interface Dojo {
     /**
      * Same as dojo.style(), but for all the nodes set with the specified cssClassName
      */
-    addStyleToClass: (cssClassName: string, cssProperty: string, propertyValue: any) => void
-
+    addStyleToClass: (
+        cssClassName: string,
+        cssProperty: string,
+        propertyValue: any
+    ) => void;
 
     /**
      * Used to associate a player event with one of your notification methods.
      * @example
      * dojo.connect( $('my_element'), 'onclick', this, 'onClickOnMyElement' );
      */
-    connect: (element: any, event: string, callback_obj: any, callback_method?: string | Function) => number;
-
+    connect: (
+        element: any,
+        event: string,
+        callback_obj: any,
+        callback_method?: string | Function
+    ) => number;
 
     query: Function;
     hitch: Function;

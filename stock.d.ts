@@ -1,12 +1,10 @@
 declare namespace ebg {
-
     export interface stockitem {
         type: string;
         id: string;
     }
 
     export class stock {
-
         //////////////////////////////////
         // Creation
 
@@ -17,7 +15,12 @@ declare namespace ebg {
          * @param item_width width in pixels for the stock component.
          * @param item_height height in pixels for the stock component.
          */
-        create(page: ebg.core.gamegui, container_div: string, item_width: number, item_height: number): void;
+        create(
+            page: ebg.core.gamegui,
+            container_div: string,
+            item_width: number,
+            item_height: number
+        ): void;
         /**
          * @param type: id of the type to add. You can choose any positive integer. All item types must have distinct IDs.
          * @param weight: weight of items of this type. Weight value is used to sort items of the stock during the display. Note that you can specify the same weight for all items; in this case, they are not sorted and their order might change randomly at any time.
@@ -25,9 +28,14 @@ declare namespace ebg {
          * @param image_position if "image" specify the URL of a CSS sprite, you must specify the position of the item image in this CSS sprite. For example, if you have a CSS sprite with 3 cubes with a size of 20x20 pixels each (so your CSS image has for example a size of 20x60 or 60x20), you specify "0" for the first cube image, 1 for the second, 2 for the third.
          * @note For image : g_gamethemeurl+'img/yourimage.png'
          */
-        addItemType(type: number | string, weight: number, image: string, image_position: number): void;
+        addItemType(
+            type: number | string,
+            weight: number,
+            image: string,
+            image_position: number
+        ): void;
         /**
-         * Set number of columns in css sprite (or how many items per row). 
+         * Set number of columns in css sprite (or how many items per row).
          * @example If you sprite is 4 cards horizonatall and 6 vertically, you have to set it to 4.
          */
         image_items_per_row: number;
@@ -40,36 +48,44 @@ declare namespace ebg {
          * @param from If you specify an HTML item here, the item will appear on this item and will be slid to its position on the stock item.
          * @example
          * this.playerMoney.addToStock( MONEY_TOKEN, 'overall_player_board_'+player_id );
-         * 
+         *
          * @note
          * Important: for a given stock control, you must use either addToStock or addToStockWithId, but NEVER BOTH OF THEM.
          */
         addToStock(type: number | string, from?: string): void;
         /**
          * This is the same method as addToStock, except that it also associates an ID with the newly created item.
-         * 
+         *
          * @param type ID of the item type to use (as specified in "addItemType")
          * @param id ID of the item
          * @param from If you specify an HTML item here, the item will appear on this item and will be slid to its position on the stock item.
          * @example
          * this.playerMoney.addToStock( MONEY_TOKEN, 'overall_player_board_'+player_id );
-         * 
+         *
          * @note
          * When you need to know which item(s) have been selected by the user (see getSelectedItems).
          * When you need to remove a specific item from the stock with removeFromStockById.
          * Important: for a given stock control, you must use either addToStock or addToStockWithId, but NEVER BOTH OF THEM.
          */
-        addToStockWithId(type: number | string, id: number | string, from?: string): void;
+        addToStockWithId(
+            type: number | string,
+            id: number | string,
+            from?: string
+        ): void;
         /**
          * Remove an item of the specific type from the stock.
          * @param type ID of the item type to use (as specified in "addItemType")
          * @param to If "to" contains the ID of an HTML element, the item removed from the Stock slides to this HTML element before it disappears
          * @param noupdate  If set to "true" it will prevent the Stock display from changing. This is useful when multiple (but not all) items are removed at the same time, to avoid ghost items appearing briefly. If you pass noupdate you have to call updateDisplay() after all items are removed.
          */
-        removeFromStock(type: number | string, to?: string, noupdate?: boolean): void;
+        removeFromStock(
+            type: number | string,
+            to?: string,
+            noupdate?: boolean
+        ): void;
         /**
          * Remove an item with a specific ID from the stock.
-         * @param type ID of the item 
+         * @param type ID of the item
          * @param to If "to" contains the ID of an HTML element, the item removed from the Stock slides to this HTML element before it disappears
          * @param noupdate  If set to "true" it will prevent the Stock display from changing. This is useful when multiple (but not all) items are removed at the same time, to avoid ghost items appearing briefly. If you pass noupdate you have to call updateDisplay() after all items are removed.
          */
@@ -89,13 +105,13 @@ declare namespace ebg {
 
         /**
          * Return an array with all the types of items present in the stock right now
-         * @example 
+         * @example
          * this.myStockControl.removeAll();
          * this.myStockControl.addToStock( 65 );
          * this.myStockControl.addToStock( 34 );
          * this.myStockControl.addToStock( 89 );
          * this.myStockControl.addToStock( 65 );
-         * 
+         *
          * // The following returns: { 34:1,  65:1,  89:1  }
          * var item_types = this.myStockControl.getPresentTypeList();
          */
@@ -120,10 +136,9 @@ declare namespace ebg {
         //////////////////////////////////
         // Selection
 
-
         /**
          * Specify a selection mode:
-         * 
+         *
          * @note
          * 0 (None): no item can be selected by the player.
          * 1 (Single): a maximum of one item can be selected by the player at a time.
@@ -132,7 +147,7 @@ declare namespace ebg {
         setSelectionMode(mode: BgaStockSelectionMode): void;
         /**
          * Specify a selection highlighting type
-         * 
+         *
          * @note
          * 'border': there will be a red border around selected items (this is the default). The attribute 'apparenceBorderWidth' can be used to manage the width of the border (in pixels).
          * 'disappear': the selected item will fade out and disappear. This is useful when the selection has the effect of destroying the item.
@@ -162,15 +177,15 @@ declare namespace ebg {
          * Callback method when the player selects/unselects an item of the stock.
          * @param control_name Name of the Html element (stock)
          * @param item_id: ID of the element in the stock
-         * 
+         *
          * @example
          * dojo.connect( this.myStockControl, 'onChangeSelection', this, 'onMyMethodToCall' );
-         * 
+         *
          * onMyMethodToCall: function( control_name, item_id )
          * {
          *      // This method is called when myStockControl selected items changed
          *      var items = this.myStockControl.getSelectedItems();
-         * 
+         *
          *      // (do something)
          * }
          */
@@ -188,7 +203,7 @@ declare namespace ebg {
         // Layout
 
         /**
-         * If you moved an item from the stock control manually (ex: after a drag'n'drop) and want to reset their positions to their original ones, you can call this method. 
+         * If you moved an item from the stock control manually (ex: after a drag'n'drop) and want to reset their positions to their original ones, you can call this method.
          * @note it is the same as updateDisplay() without arugment
          */
         resetItemsPosition(): void;
@@ -209,7 +224,9 @@ declare namespace ebg {
          * // Item type 1 gets a new weight of 10, 2 a new weight of 20, 3 a new weight of 30.
          * this.myStockControl.changeItemsWeight( { 1: 10, 2: 20, 3: 30 } );
          */
-        changeItemsWeight(newWeight: { [type: number]: [weight: number] }): void;
+        changeItemsWeight(newWeight: {
+            [type: number]: [weight: number];
+        }): void;
         /**
          * Center the stock items in the middle of the stock container
          */
@@ -242,27 +259,35 @@ declare namespace ebg {
         extraClasses: string;
         /**
          * Using onItemCreate, you can trigger a method each time a new item is added to the Stock, in order to customize it.
-         * 
+         *
          * @example
          * // During "setup" phase, we associate our method "setupNewCard" with the creation of a new stock item:
          * this.myStockItem.onItemCreate = dojo.hitch( this, 'setupNewCard' );
-         * 
+         *
          * // And here is our "setupNewCard":
-         * setupNewCard: function( card_div, card_type_id, card_id ) 
+         * setupNewCard: function( card_div, card_type_id, card_id )
          * {
          *      this.addTooltip( card_div.id, _("Some nice tooltip for this item"), '' );
          * }
          */
-        onItemCreate(card_div: HTMLElement, card_type_id: number, card_id: string) : void;
+        onItemCreate(
+            card_div: HTMLElement,
+            card_type_id: number,
+            card_id: string
+        ): void;
         /**
          * Function handler called when div is removed
-         * 
+         *
          * @example
-         * this.myStock.onItemDelete = (card_div, card_type_id, card_id) => { 
-         *      console.log("card deleted from myStock: "+card_id); 
+         * this.myStock.onItemDelete = (card_div, card_type_id, card_id) => {
+         *      console.log("card deleted from myStock: "+card_id);
          * };
          */
-        onItemDelete(card_div: HTMLElement, card_type_id: number, card_id: string) : void;
+        onItemDelete(
+            card_div: HTMLElement,
+            card_type_id: number,
+            card_id: string
+        ): void;
 
         //////////////////////////////////
         // Other (non documented)
@@ -273,7 +298,5 @@ declare namespace ebg {
          * Useful to block the selection change without changing selection mode.
          */
         selectable: number;
-
     }
-
 }

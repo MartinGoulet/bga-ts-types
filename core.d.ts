@@ -65,7 +65,7 @@ declare namespace ebg {
              * this.slideToObject( "some_token", "some_place_on_board" ).play();
              */
             slideToObject: (
-                mobile_obj: string,
+                mobile_obj: string | HTMLElement,
                 target_obj: string,
                 duration?: number,
                 delay?: number
@@ -87,7 +87,7 @@ declare namespace ebg {
              * this.slideToObjectPos( "some_token", "some_place_on_board", 0, 10 ).play();
              */
             slideToObjectPos: (
-                mobile_obj: string,
+                mobile_obj: string | HTMLElement,
                 target_obj: string,
                 target_x: number,
                 target_y: number,
@@ -257,12 +257,23 @@ declare namespace ebg {
                 offset_x?: number,
                 offset_y?: number
             ): void;
+
+            fadeOutAndDestroy(
+                id: string,
+                duration?: number,
+                delay?: number
+            ): void;
+            showMessage(
+                msg: string,
+                type: "info" | "error" | "only_to_log"
+            ): void;
+            updatePlayerOrdering(): void;
         }
 
         /**
          * To allow Typescript to extends the interface without implementing it
          */
-        class gamegui implements gamegui {}
+        class gamegui implements gamegui { }
     }
 }
 
