@@ -7,7 +7,7 @@ declare namespace ebg {
          * Associate counter with existing target dom element
          * @param target Id of the Html element
          */
-        create(target: string): void;
+        create(target: string | HTMLElement): void;
         /**
          * Return current value
          */
@@ -28,7 +28,7 @@ declare namespace ebg {
          */
         toValue(value: number): void;
         /**
-         * Display - instead. 
+         * Display - instead.
          * @remark It just changes display value once, it does not actually disables it, i.e. if you set it again, it will be shown again
          */
         disable(): void;

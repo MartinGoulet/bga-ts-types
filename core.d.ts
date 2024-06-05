@@ -1,7 +1,9 @@
 declare const g_gamethemeurl: string;
 
 declare namespace ebg {
+
     namespace core {
+
         interface gamegui {
             /////////////////////////////////////////////////
             // General tips
@@ -64,12 +66,7 @@ declare namespace ebg {
              * @example
              * this.slideToObject( "some_token", "some_place_on_board" ).play();
              */
-            slideToObject: (
-                mobile_obj: string | HTMLElement,
-                target_obj: string,
-                duration?: number,
-                delay?: number
-            ) => DojoFxAnimation;
+            slideToObject: (mobile_obj: string, target_obj: string, duration?: number, delay?: number) => DojoFxAnimation;
             /**
              * This method does exactly the same as "slideToObject", except than you can specify some (x,y) coordinates.
              * This way, "mobile_obj" will slide to the specified x,y position relatively to "target_obj".
@@ -86,14 +83,7 @@ declare namespace ebg {
              * @example
              * this.slideToObjectPos( "some_token", "some_place_on_board", 0, 10 ).play();
              */
-            slideToObjectPos: (
-                mobile_obj: string | HTMLElement,
-                target_obj: string,
-                target_x: number,
-                target_y: number,
-                duration?: number,
-                delay?: number
-            ) => DojoFxAnimation;
+            slideToObjectPos: (mobile_obj: string, target_obj: string, target_x: number, target_y: number, duration?: number, delay?: number) => DojoFxAnimation;
             /**
              * This method is useful when you want to slide a temporary HTML object from one place to another.
              * As this object does not exists before the animation and won't remain after, it could be complex to
@@ -109,14 +99,7 @@ declare namespace ebg {
              * @example
              * this.slideTemporaryObject( '<div class="token_icon"></div>', 'tokens', 'my_origin_div', 'my_target_div' ).play();
              */
-            slideTemporaryObject: (
-                mobile_obj_html: string,
-                mobile_obj_parent: string,
-                from: string,
-                to: string,
-                duration?: number,
-                delay?: number
-            ) => DojoFxAnimation;
+            slideTemporaryObject: (mobile_obj_html: string, mobile_obj_parent: string, from: string, to: string, duration?: number, delay?: number) => DojoFxAnimation;
 
             /**
              * This method is a handy shortcut to slide an existing HTML object to some place then destroy it upon arrival. It can be used for example to move a victory token or a card from the board to the player panel to show that the player earns it, then destroy it when we don't need to keep it visible on the player panel.
@@ -130,12 +113,7 @@ declare namespace ebg {
              * @example
              * this.slideToObjectAndDestroy( "some_token", "some_place_on_board", 1000, 0 );
              */
-            slideToObjectAndDestroy: (
-                node: string,
-                to: string,
-                duration?: number,
-                delay?: number
-            ) => DojoFxAnimation;
+            slideToObjectAndDestroy: (node: string, to: string, duration?: number, delay?: number) => DojoFxAnimation;
 
             ///////////////////////////////
             // Moving Elements
@@ -148,22 +126,18 @@ declare namespace ebg {
              * @note
              * This is not really an animation, but placeOnObject is frequently used before starting an animation.
              */
-            placeOnObject: (mobile_obj: string, target_obj: string) => void;
+            placeOnObject: (mobile_obj: string, target_obj: string) => void
             /**
              * This method works exactly like placeOnObject, except than you can specify some (x,y) coordinates.
              */
-            placeOnObjectPos: (
-                mobile_obj: string,
-                target_obj: string,
-                target_x: number,
-                target_y: number
-            ) => void;
+            placeOnObjectPos: (mobile_obj: string, target_obj: string, target_x: number, target_y: number) => void;
             /**
              * With this method, you change the HTML parent of "mobile_obj" element. "target_obj" is the new parent of this element. The beauty of attachToNewParent is that the mobile_obj element DOES NOT MOVE during this process.
              * @note
              * What happens is that the method calculate a relative position of mobile_obj to make sure it does not move after the HTML parent changes.
              */
-            attachToNewParent: (mobile_obj: string, target_obj: string) => void;
+            attachToNewParent: (mobile_obj: string, target_obj: string) => void
+
 
             prefs: { [pref_id: number]: BgaGamePreference };
 
@@ -173,11 +147,7 @@ declare namespace ebg {
             /**
              * Add an HTML tooltip to the DOM node (for more elaborate content such as presenting a bigger version of a card).
              */
-            addTooltipHtml: (
-                nodeId: string,
-                html: string,
-                delay?: number
-            ) => void;
+            addTooltipHtml: (nodeId: string, html: string, delay?: number) => void;
             /**
              * Add a simple text tooltip to all the DOM nodes set with this cssClass.
              * @param cssClass
@@ -189,49 +159,20 @@ declare namespace ebg {
              * @note
              * helpString and actionString : Usually, _() must be used for the text to be marked for translation.
              */
-            addTooltipToClass: (
-                cssClass,
-                helpString: string,
-                actionString: string,
-                delay?: number
-            ) => void;
-            addActionButton: (
-                id: string,
-                label: string,
-                method: string | Function,
-                destination?: string,
-                blinking?: boolean,
-                color?: BgaButtonColor
-            ) => void;
-            connect: (
-                element: HTMLElement,
-                event: string,
-                handler: string | Function
-            ) => any;
+            addTooltipToClass: (cssClass, helpString: string, actionString: string, delay?: number) => void;
+            addActionButton: (id: string, label: string, method: string | Function, destination?: string | Element, blinking?: boolean, color?: BgaButtonColor) => void;
+            connect: (element: HTMLElement, event: string, handler: string | Function) => any;
 
-            connectClass: (
-                cssClassName: string,
-                event: string,
-                handle: string | Function
-            ) => void;
+            connectClass: (cssClassName: string, event: string, handle: string | Function) => void;
             disconnect: (element: HTMLElement, event: string) => void;
             disconnectAll: () => void;
 
             restoreServerGameState: () => void;
-            updatePageTitle(): void;
+            updatePageTitle() : void;
 
-            checkPossibleActions: (
-                action: string,
-                nomessage?: string
-            ) => boolean;
+            checkPossibleActions: (action: string, nomessage?: string) => boolean;
             checkAction: (action: string, nomessage?: boolean) => boolean;
-            ajaxcall: (
-                url: string,
-                parameters: any,
-                obj_callback: any,
-                callback: Function,
-                callback_error: Function
-            ) => void;
+            ajaxcall: (url: string, parameters: any, obj_callback: any, callback: Function, callback_error: Function) => void;
 
             setClientState: (state_name: string, args: any) => void;
 
@@ -241,48 +182,22 @@ declare namespace ebg {
 
             inherited: (args: any) => any;
 
-            confirmationDialog(
-                message: string,
-                yesHandler?: string | Function,
-                noHandler?: string | Function
-            ): void;
-
-            dontPreloadImage(image_file_name: string): void;
-            ensureSpecificGameImageLoading(image_file_names_array: string[]);
-            displayScoring(
-                anchor_id: string,
-                color: string,
-                score: number,
-                duration: number,
-                offset_x?: number,
-                offset_y?: number
-            ): void;
-
-            fadeOutAndDestroy(
-                id: string,
-                duration?: number,
-                delay?: number
-            ): void;
-            showMessage(
-                msg: string,
-                type: "info" | "error" | "only_to_log"
-            ): void;
-            updatePlayerOrdering(): void;
+            confirmationDialog( message: string, yesHandler?: string | Function, noHandler?: string | Function ) : void;
         }
 
         /**
          * To allow Typescript to extends the interface without implementing it
          */
-        class gamegui implements gamegui { }
+        class gamegui implements gamegui {}
+
     }
+
 }
 
 declare interface INotificationQueue {
     setSynchronous: (event: string, duration: number) => void;
-    setIgnoreNotificationCheck: (
-        event: string,
-        condition: (event: any) => boolean
-    ) => void;
+    onSynchronousNotificationEnd: () => void;
+    setIgnoreNotificationCheck: (event: string, condition: (event: any) => boolean) => void;
 }
 
 declare interface INotification<TArgs> {
